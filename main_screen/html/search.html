@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GelSond Product Search</title>
+    <!-- Google Font -->
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" 
+    href="../css/search.css">
+</head>
+<body>
+    <section id="header">
+        <a href="/Home_screen/index.html"><img src="../images/logo.png" alt="GelSond Logo"></a>
+
+        <div>
+            <ul id="navbar">
+                <li><a href="main.html">Home</a></li>
+                <li><a class="active" href="search.html">Search</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="main.html#footer">Contact</a></li>
+            </ul>
+        </div>
+        <div id="menu-bar" class="menu-bar">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </section>
+
+    <div class="wrapper">
+        <!-- Search Bar -->
+        <div id="search-container">
+            <input
+                type="search"
+                id="search-input"
+                placeholder="Search headset by name.."
+            />
+            <button id="search">Search</button>
+        </div>
+
+        <!-- Dropdown Filters -->
+        <div id="filters">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Sports">Sports</option>
+                <option value="Casual">Casual</option>
+            </select>
+
+            <select id="budget-filter">
+                <option value="all">All Budgets</option>
+                <option value="0-50">$0 - $50</option>
+                <option value="51-100">$51 - $100</option>
+                <option value="101-200">$101 - $200</option>
+            </select>
+
+            <select id="brand-filter">
+                <option value="all">All Brands</option>
+                <option value="HyperX">HyperX</option>
+                <option value="Sony">Sony</option>
+                <option value="Bose">Bose</option>
+                <option value="Razer">Razer</option>
+                <option value="JBL">JBL</option>
+                <option value="Beats">Beats</option>
+                <option value="SteelSeries">SteelSeries</option>
+                <option value="AKG">AKG</option>
+            </select>
+        </div>
+
+        <!-- Product Cards -->
+        <div id="products">
+            <div class="product" data-name="product-1">
+                <img src="../images/product1.jpg" alt="Product 1">
+                <h3>Product Name 1</h3>
+                <div class="price">$100</div>
+                <div class="hidden-text">Description for Product 1.</div>
+            </div>
+            <div class="product" data-name="product-2">
+                <img src="../images/product2.jpg" alt="Product 2">
+                <h3>Product Name 2</h3>
+                <div class="price">$150</div>
+                <div class="hidden-text">Description for Product 2.</div>
+            </div>
+            <!-- Add more products as needed -->
+        </div>
+
+        <div id="no-results-message" class="hide">
+            <h3>No results found</h3>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script 
+    src="../js/search.js"></script>
+</body>
+</html>
