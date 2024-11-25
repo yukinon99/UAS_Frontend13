@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const profileController = require('../controllers/profileController');
-const { isAuthenticated } = require('../middleware/auth');
+const path = require('path');
 
-// Profile routes
-router.get('/', isAuthenticated, profileController.getProfile);
-router.post('/update', isAuthenticated, profileController.updateProfile);
-router.post('/delete', isAuthenticated, profileController.deleteAccount);
+// Route untuk halaman profile
+router.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'profile.html'));
+});
 
 module.exports = router; 

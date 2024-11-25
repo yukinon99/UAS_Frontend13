@@ -3,15 +3,34 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
+// Fungsi validasi password
+function isStrongPassword(password) {
+    // Minimal 8 karakter
+    // Harus mengandung huruf besar, huruf kecil, dan angka
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return strongPasswordRegex.test(password);
+}
+
 // Register
-router.post('/register', async (req, res) => {
+router.post('/api/auth/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
     
+    // Validasi password
+    if (!isStrongPassword(password)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, dan angka'
+        });
+    }
+
     // Check if user exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).render('register', { error: 'User already exists' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'User already exists' 
+      });
     }
 
     // Hash password
@@ -26,33 +45,58 @@ router.post('/register', async (req, res) => {
     });
 
     await user.save();
-    res.redirect('/login');
+    
+    res.status(201).json({
+      success: true,
+      message: 'Registrasi berhasil'
+    });
   } catch (err) {
-    res.status(500).render('register', { error: 'Server error' });
+    console.error('Register error:', err);
+    res.status(500).json({ 
+      success: false,
+      message: 'Server error' 
+    });
   }
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
     // Check user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).render('login', { error: 'Invalid credentials' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'Email atau password salah' 
+      });
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).render('login', { error: 'Invalid credentials' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'Email atau password salah' 
+      });
     }
 
+    // Set session
     req.session.user = user;
-    res.redirect('/profile');
+
+    res.status(200).json({
+      success: true,
+      message: 'Login berhasil',
+      redirectUrl: '/main.html'
+    });
+
   } catch (err) {
-    res.status(500).render('login', { error: 'Server error' });
+    console.error('Login error:', err);
+    res.status(500).json({ 
+      success: false,
+      message: 'Terjadi kesalahan saat login' 
+    });
   }
 });
 
@@ -91,6 +135,16 @@ router.post('/delete', async (req, res) => {
   } catch (err) {
     res.status(500).render('profile', { error: 'Delete failed' });
   }
+});
+
+// Route untuk halaman main
+router.get('/main.html', (req, res) => {
+    res.sendFile('main.html', { root: './views' }); // sesuaikan dengan lokasi file main.html
+});
+
+// Route untuk halaman profile
+router.get('/profile', (req, res) => {
+  res.sendFile('profile.html', { root: './views' }); // sesuaikan dengan lokasi file profile.html
 });
 
 module.exports = router; 

@@ -1,18 +1,16 @@
 const errorHandler = (err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Error:', err);
     
-    if (req.xhr) {
-        // Handle AJAX requests
-        res.status(500).json({
-            success: false,
-            message: 'Something went wrong!'
-        });
-    } else {
-        // Handle regular requests
-        res.status(500).render('error', {
-            error: 'Something went wrong!'
+    // Jika request adalah AJAX/API
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+        return res.status(500).json({
+            message: 'Terjadi kesalahan pada server',
+            error: process.env.NODE_ENV === 'development' ? err.message : {}
         });
     }
+    
+    // Jika request biasa, redirect ke halaman error atau login
+    res.redirect('/login');
 };
 
 module.exports = errorHandler; 

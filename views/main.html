@@ -160,7 +160,7 @@
         <a href="#" title="Blog">
             <i class="fas fa-blog"></i>
         </a>
-        <a href="/profile" title="Profile">
+        <a href="#" ng-click="goToProfile()" title="Profile">
             <i class="fas fa-user"></i>
         </a>
     </div>
@@ -198,7 +198,7 @@
     <script>
         var app = angular.module('mainApp', []);
         
-        app.controller('MainController', function($scope) {
+        app.controller('MainController', function($scope, $window, $http) {
             $scope.title = "Welcome to GelSond";
             $scope.appName = "Awesome App";
             $scope.welcomeMessage = "This is a modern web application built with AngularJS";
@@ -226,6 +226,21 @@
             $scope.logout = function() {
                 // Implement logout logic here
                 window.location.href = '/login';
+            };
+            
+            $scope.goToProfile = function() {
+                // Cek session dengan memanggil endpoint
+                $http.get('/check-session')
+                    .then(function(response) {
+                        if (response.data.isLoggedIn) {
+                            $window.location.href = '/profile';
+                        } else {
+                            $window.location.href = '/login';
+                        }
+                    })
+                    .catch(function() {
+                        $window.location.href = '/login';
+                    });
             };
         });
     </script>
