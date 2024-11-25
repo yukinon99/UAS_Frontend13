@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <title>GelSond</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .nav-menu {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b00;
+            background: transparent;
+        }
+
+        .nav-menu a.active {
+            color: #ff6b00;
+        }
+
+        .logo {
+            position: fixed;
+            top: 1.5rem;
+            left: 2rem;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('path_to_airplane_image.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .orange-text {
+            color: #ff6b00;
+        }
+
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: #f8f8f8;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #eee;
+            border-radius: 8px;
+        }
+
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body ng-controller="MainController">
+    <div class="logo">
+        <img src="path_to_your_logo.png" alt="GelSond">
+    </div>
+
+    <div class="nav-menu">
+        <a href="#" class="active" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#" title="Search">
+            <i class="fas fa-search"></i>
+        </a>
+        <a href="#" title="Blog">
+            <i class="fas fa-blog"></i>
+        </a>
+        <a href="/profile" title="Profile">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <p>Hi</p>
+            <h1>Welcome to <span class="orange-text">GelSond</span></h1>
+            <h2>Ready to dive in</h2>
+            <p>you can customize and search based what you like!!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="welcome-section" ng-show="currentView === 'home'">
+                <h2>Welcome to {{ appName }}</h2>
+                <p>{{ welcomeMessage }}</p>
+            </div>
+
+            <div class="features" ng-show="currentView === 'features'">
+                <div class="feature-card" ng-repeat="feature in features">
+                    <h3>{{ feature.title }}</h3>
+                    <p>{{ feature.description }}</p>
+                </div>
+            </div>
+
+            <div class="user-section" ng-if="user">
+                <h3>Welcome back, {{ user.name }}!</h3>
+                <button class="btn" ng-click="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('mainApp', []);
+        
+        app.controller('MainController', function($scope) {
+            $scope.title = "Welcome to GelSond";
+            $scope.appName = "Awesome App";
+            $scope.welcomeMessage = "This is a modern web application built with AngularJS";
+            $scope.currentView = 'home';
+            
+            $scope.features = [
+                {
+                    title: "User Management",
+                    description: "Easy to manage user accounts and profiles"
+                },
+                {
+                    title: "Secure Authentication",
+                    description: "Safe and reliable user authentication system"
+                },
+                {
+                    title: "Profile Updates",
+                    description: "Update your profile information anytime"
+                }
+            ];
+            
+            $scope.setView = function(view) {
+                $scope.currentView = view;
+            };
+            
+            $scope.logout = function() {
+                // Implement logout logic here
+                window.location.href = '/login';
+            };
+        });
+    </script>
+</body>
+</html> 
