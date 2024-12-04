@@ -139,12 +139,17 @@ router.post('/delete', async (req, res) => {
 
 // Route untuk halaman main
 router.get('/main.html', (req, res) => {
-    res.sendFile('main.html', { root: './views' }); // sesuaikan dengan lokasi file main.html
+    res.sendFile('main.html', { root: './views' });
+});
+
+// Route untuk halaman search
+router.get('/search.html', (req, res) => {
+    res.sendFile('search.html', { root: './views' }); // sesuaikan dengan lokasi file search.html
 });
 
 // Route untuk halaman profile
 router.get('/profile', (req, res) => {
-  res.sendFile('profile.html', { root: './views' }); // sesuaikan dengan lokasi file profile.html
+  res.sendFile('profile.html', { root: './views' });
 });
 
 module.exports = router; 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="productApp">
+<head>
+    <title>Search Products</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body ng-controller="SearchController">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="left-section">
+            <img src="img/Real-Sound.png" alt="Real Sound" class="logo">
+        </div>
+        <div class="center-section">
+            <a href="/" class="home-icon">
+                <i class="fas fa-home"></i>
+            </a>
+            <div class="search-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="profile-icon" style="cursor: pointer;">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Content -->
+    <div class="search-container">
+        <h1>Search Products</h1>
+        <div class="search-filters">
+            <input type="text" ng-model="searchQuery" placeholder="Search by name" />
+            <select ng-model="selectedBrand">
+                <option value="">All Brands</option>
+                <option value="Brand A">Brand A</option>
+                <option value="Brand B">Brand B</option>
+            </select>
+            <select ng-model="selectedType">
+                <option value="">All Types</option>
+                <option value="Type 1">Type 1</option>
+                <option value="Type 2">Type 2</option>
+            </select>
+            <input type="number" ng-model="maxPrice" placeholder="Max Price" />
+        </div>
+
+        <ul class="product-list">
+            <li class="product-item" ng-repeat="product in products | filter:filterProducts">
+                {{ product.name }} - {{ product.brand }} - ${{ product.price }} - {{ product.type }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>

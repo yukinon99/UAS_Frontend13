@@ -1,0 +1,79 @@
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #000;
+    color: white;
+}
+
+.left-section .logo {
+    height: 40px;
+}
+
+.center-section {
+    display: flex;
+    gap: 2rem;
+}
+
+.center-section i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.center-section i:hover {
+    color: #ff6b00;
+}
+
+/* Search page styles */
+.search-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-filters input,
+.search-filters select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    list-style-type: none;
+}
+
+.product-item {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    margin: 10px 0;
+}
+
+/* Add to existing CSS */
+.home-icon,
+.search-icon,
+.cart-icon,
+.profile-icon {
+    cursor: pointer;
+}
+
+.home-icon:hover,
+.search-icon:hover,
+.cart-icon:hover,
+.profile-icon:hover {
+    color: #ff6b00;
+    transition: color 0.3s ease;
+}
