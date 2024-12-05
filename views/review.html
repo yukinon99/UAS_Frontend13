@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="reviewApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Headset - GelSond</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/review.css">
+</head>
+<body ng-controller="ReviewController" class="bg-custom-light">
+    <!-- Navbar yang sama dengan main.html -->
+    <div class="nav-menu">
+        <a href="#!" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#!search" title="Search">
+            <i class="fas fa-search"></i>
+        </a>
+        <a href="#!review" class="active" title="Review Headset">
+            <i class="fas fa-blog"></i>
+        </a>
+        <a href="#" ng-click="goToProfile()" title="Profile">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Review Headset</h1>
+        <div class="card mb-3" ng-repeat="review in reviews">
+            <div class="card-body">
+                <h5 class="card-title">{{review.brand}}</h5>
+                <p class="card-text">{{review.comment}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <button class="btn btn-success" ng-click="likeReview(review)">
+                            <i class="fas fa-thumbs-up"></i> {{review.likes}}
+                        </button>
+                        <button class="btn btn-danger" ng-click="dislikeReview(review)">
+                            <i class="fas fa-thumbs-down"></i> {{review.dislikes}}
+                        </button>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary">{{review.rating}}/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer yang sama dengan main.html -->
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p><strong>Follow Us</strong></p>
+            <div class="footer-social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+            <p>&copy; 2024 GelSond. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/review.js"></script>
+</body>
+</html>

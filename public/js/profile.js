@@ -4,6 +4,7 @@ app.controller('ProfileController', function($scope, $timeout, $http) {
     $scope.successMessage = '';
     $scope.errorMessage = '';
     $scope.fadeOut = false;
+    $scope.wishlists = [];
 
     $scope.initUser = function(userData) {
         $scope.user = userData;
@@ -75,4 +76,30 @@ app.controller('ProfileController', function($scope, $timeout, $http) {
             showNotification('Logout failed', true);
         });
     };
+
+    $scope.getWishlists = function() {
+        $http.get('/api/wishlists')
+            .then(function(response) {
+                $scope.wishlists = response.data;
+            })
+            .catch(function(error) {
+                console.error('Error fetching wishlists:', error);
+            });
+    };
+
+    $scope.removeFromWishlist = function(productId) {
+        if (confirm('Apakah Anda yakin ingin menghapus item ini dari wishlist?')) {
+            $http.delete('/api/wishlists/' + productId)
+                .then(function() {
+                    $scope.getWishlists();
+                    alert('Item berhasil dihapus dari wishlist');
+                })
+                .catch(function(error) {
+                    console.error('Error removing item from wishlist:', error);
+                    alert('Gagal menghapus item dari wishlist');
+                });
+        }
+    };
+
+    $scope.getWishlists();
 }); 

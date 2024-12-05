@@ -13,10 +13,10 @@
         <a href="#" class="active" title="Home">
             <i class="fas fa-home"></i>
         </a>
-        <a href="#" title="Search">
+        <a href="/search.html" title="Search">
             <i class="fas fa-search"></i>
         </a>
-        <a href="#" title="Blog">
+        <a href="#" ng-click="goToReview()" title="Review Headset">
             <i class="fas fa-blog"></i>
         </a>
         <a href="#" ng-click="goToProfile()" title="Profile">
@@ -216,6 +216,10 @@
                     .catch(function() {
                         $window.location.href = '/login';
                     });
+            };
+            
+            $scope.goToReview = function() {
+                $window.location.href = '/review.html';
             };
         });
     </script>

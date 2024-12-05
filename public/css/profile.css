@@ -131,4 +131,28 @@
 
 .success-message i, .error-message i {
     font-size: 1.2em;
+}
+
+/* Styling untuk wishlist section */
+.wishlist-item {
+    transition: transform 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.wishlist-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.wishlist-item img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.wishlist-item .card-footer {
+    background-color: transparent;
+}
+
+.wishlist-item .badge {
+    font-size: 0.9rem;
 } 

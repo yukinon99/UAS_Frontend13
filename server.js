@@ -7,6 +7,7 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profileRoutes');
+const path = require('path');
 
 // Connect Database
 connectDB();
@@ -86,6 +87,35 @@ app.get('/profile', (req, res) => {
         res.render('profile.html', { user: req.session.user });
     } else {
         res.redirect('/login');
+    }
+});
+
+app.get('/review.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/review.html'));
+});
+
+// Dummy data untuk wishlist
+let wishlists = [
+    { id: 1, name: 'Headset A', brand: 'Brand A', price: 500000, image: '/images/headset-a.jpg', productUrl: '/product/1' },
+    { id: 2, name: 'Headset B', brand: 'Brand B', price: 750000, image: '/images/headset-b.jpg', productUrl: '/product/2' },
+    // Tambahkan data lainnya sesuai kebutuhan
+];
+
+// Endpoint untuk mendapatkan daftar wishlist
+app.get('/api/wishlists', (req, res) => {
+    res.json(wishlists);
+});
+
+// Endpoint untuk menghapus item dari wishlist
+app.delete('/api/wishlists/:id', (req, res) => {
+    const itemId = parseInt(req.params.id, 10);
+    const index = wishlists.findIndex(item => item.id === itemId);
+
+    if (index !== -1) {
+        wishlists.splice(index, 1);
+        res.status(200).json({ message: 'Item berhasil dihapus dari wishlist' });
+    } else {
+        res.status(404).json({ message: 'Item tidak ditemukan' });
     }
 });
 
