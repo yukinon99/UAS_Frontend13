@@ -3,158 +3,17 @@
 <head>
     <title>GelSond</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            background: #333;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .nav-menu {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 1.5rem;
-            display: flex;
-            justify-content: flex-end;
-            gap: 30px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: all 0.3s;
-            font-size: 1.2rem;
-        }
-
-        .nav-menu a:hover {
-            color: #ff6b00;
-            background: transparent;
-        }
-
-        .nav-menu a.active {
-            color: #ff6b00;
-        }
-
-        .logo {
-            position: fixed;
-            top: 1.5rem;
-            left: 2rem;
-            z-index: 1001;
-        }
-
-        .logo img {
-            height: 40px;
-        }
-
-        .hero-section {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('path_to_airplane_image.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            padding-left: 10%;
-            color: white;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .orange-text {
-            color: #ff6b00;
-        }
-
-        .content {
-            margin-top: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .welcome-section {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            padding: 1.5rem;
-            background: #f8f8f8;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .user-section {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #eee;
-            border-radius: 8px;
-        }
-
-        .btn {
-            background: #007bff;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
-<body ng-controller="MainController">
-    <div class="logo">
-        <img src="path_to_your_logo.png" alt="GelSond">
-    </div>
-
+<body ng-controller="MainController" class="bg-custom-light">
     <div class="nav-menu">
         <a href="#" class="active" title="Home">
             <i class="fas fa-home"></i>
         </a>
-        <a href="/search.html" title="Search">
+        <a href="#" title="Search">
             <i class="fas fa-search"></i>
         </a>
         <a href="#" title="Blog">
@@ -165,36 +24,152 @@
         </a>
     </div>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <p>Hi</p>
-            <h1>Welcome to <span class="orange-text">GelSond</span></h1>
-            <h2>Ready to dive in</h2>
-            <p>you can customize and search based what you like!!</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="content">
-            <div class="welcome-section" ng-show="currentView === 'home'">
-                <h2>Welcome to {{ appName }}</h2>
-                <p>{{ welcomeMessage }}</p>
-            </div>
-
-            <div class="features" ng-show="currentView === 'features'">
-                <div class="feature-card" ng-repeat="feature in features">
-                    <h3>{{ feature.title }}</h3>
-                    <p>{{ feature.description }}</p>
+    <section class="hero-section">
+        <h1>Welcome to Your Sound-Heaven Guide</h1>
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <p>Discover a world of music, style, and your best choice.</p>
+                </div>
+                <div class="carousel-item">
+                    <p>Elevate your Experience to the Next Level.</p>
+                </div>
+                <div class="carousel-item">
+                    <p>Embrace a balanced experience with our guidance.</p>
+                </div>
+                <div class="carousel-item">
+                    <p>Find inspiration for a new trend.</p>
                 </div>
             </div>
-
-            <div class="user-section" ng-if="user">
-                <h3>Welcome back, {{ user.name }}!</h3>
-                <button class="btn" ng-click="logout()">Logout</button>
-            </div>
         </div>
-    </div>
+    </section>
 
+    <main class="container my-5">
+        <div class="row">
+            <section class="col-md-12">
+                <div class="mb-4">
+                    <h2>Welcome to GelSond</h2>
+                    <h3 class="text-muted">Explore trends, Comfort, and a new best Gaming Experience</h3>
+                </div>
+                <p class="custom-text-color">
+                    Discover a new world of music and sound that you've never experienced before. GelSond is here to guide you in finding the perfect headphones that match your unique lifestyle. Whether you're a passionate gamer seeking immersive audio, an athlete looking for a secure fit during workouts, or someone who appreciates premium sound quality for daily use, we're here to help you make the best choice. Let us be your trusted companion in exploring the world of audio excellence, tailored specifically to your needs and preferences.
+                </p>
+
+                <div id="figureCarousel" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="2000">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://images.unsplash.com/photo-1577174881658-0f30ed549adc?q=80&w=1920&auto=format&fit=crop" class="figure-img img-fluid rounded" alt="Wellness lifestyle image">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?q=80&w=2070&auto=format&fit=crop" class="figure-img img-fluid rounded" alt="Wellness lifestyle image">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1515940037466-8f595ab6e713?q=80&w=1929&auto=format&fit=crop" class="figure-img img-fluid rounded" alt="Wellness lifestyle image">
+                        </div>
+                    </div>
+                </div>
+
+                <section class="mb-4">
+                    <h3>Latest News in Gaming </h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="/images/hyperx.jpg" alt="Hyper-X">
+                                <h5>Newest Hyper-X Soundwear Gears</h5>
+                                <p>Explore The High-end Gaming Headset Directly from Hyper-X themselves!</p>
+                                <a href="https://hyperx.com/collections/gaming-headsets" class="btn btn-primary" target="_blank">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="path_to_nutrition_image.jpg" alt="RAZER">
+                                <h5>Razer's Newest Gaming Headset</h5>
+                                <p>Discover how to fuel your gaming experience with the newest Razer headset Directly from Razer's Official Website</p>
+                                <a href="https://www.razer.com/pc/gaming-headsets-and-audio?srsltid=AfmBOorHgPQ5Ej8tJ3cX0eDjl54_jK1GpsOoqEi3Nmk9HB8Xexitp8BC" class="btn btn-primary" target="_blank">Learn More</a>
+                            </div>"
+                        </div>
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="path_to_workout_image.jpg" alt="SteelSeries">
+                                <h5>SteelSeries' Poweful Gaming Headset</h5>
+                                <p>Check out the newest Award-Winning and Most Powerful SteelSeries Gaming Headset Directly from SteelSeries' Official Website</p>
+                                <a href="https://steelseries.com/gaming-headsets?srsltid=AfmBOorjXOuxLW5-ZXXMHMgAIphT78cOmn6eQ3YyoBiTYn7hx7xRG" class="btn btn-primary" target="_blank">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h3>Explore Fashion & Trends</he3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="path_to_fashion_image.jpg" alt="Fashion">
+                                <h5>Fashion Trends</h5>
+                                <p>Stay updated with the latest fashion trends.</p>
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="path_to_beauty_image.jpg" alt="Beauty">
+                                <h5>Beauty Tips</h5>
+                                <p>Discover beauty tips and tricks for a radiant look.</p>
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="trend-card">
+                                <img src="path_to_fitness_image.jpg" alt="Fitness">
+                                <h5>Fitness Trends</h5>
+                                <p>Stay fit and healthy with the latest fitness trends.</p>
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h2>Testimonials</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <p>"This website transformed my lifestyle!"</p>
+                                <cite>- P.Diddy</cite>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <p>"I found amazing tips to stay healthy, KIDS!"</p>
+                                <cite>- Drake</cite>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <p>"A wonderful resource for wellness inspiration, they not like us"</p>
+                                <cite>- Kendrick</cite>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p><strong>Follow Us</strong></p>
+            <div class="footer-social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+            <p>&copy; 2024 GelSond. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var app = angular.module('mainApp', []);
         
