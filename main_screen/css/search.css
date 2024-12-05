@@ -9,14 +9,14 @@
 }
 
 body {
-    background-color: #000000f1;
+    background-color: #aba9a967;
 }
 
 /* HEADER */
 #header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding-right: 75px;
     padding-left: 50px;
     padding-top: 10px;
@@ -40,39 +40,84 @@ body {
     height: 80px;
 }
 
-#navbar {
+.nav-menu {
+    background: #070707d6;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-menu a {
+    color: rgb(94, 90, 90);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+}
+
+.nav-menu a:hover {
+    color: #ffffff;
+    background: transparent;
+}
+
+.nav-menu a.active {
+    color: #ffffff;
+}
+
+.navbar,
+.footer-social-icons {
+    background-color: #e0f7fa;
+}
+
+.navbar-brand,
+.nav-link {
+    font-weight: bold;
+    color: #060606;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
+/* Navigasi Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #ffffff;
+}
+
+.navbar .icon {
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-#navbar li {
-    list-style: none;
-    padding: 0 20px;
-    position: relative;
+.navbar .icon a {
+    margin-left: 10px;
 }
 
-#navbar li a {
-    text-decoration: none;
-    font-size: 16px;
-    color: #ffffff;
-    transition: 0.3s ease;
-}
-
-#navbar li a:hover,
-#navbar li a.active {
-    color: #FF7200;
-}
-
-#navbar li a.active::after,
-#navbar li a a:hover::after {
-    content: "";
-    width: 30%;
-    height: 2px;
-    background: #FF7200;
-    position: absolute;
-    bottom: -4px;
-    left: 20px;
+.navbar .icon a img {
+    width: 24px;
+    height: 24px;
 }
 
 /* SEARCH */
@@ -85,9 +130,17 @@ body {
 }
 
 #search-container {
-    margin: 1em 0;
+    margin-left: 100px;
+    width: 1000px;
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 850px) {
+    #search-container {
+        margin-left: 0;
+        width: 100%;
+    }
 }
 
 #search-container input {
@@ -106,7 +159,7 @@ body {
     padding: 1em 2em;
     margin-left: 1em;
     background-color: #0e0b09;
-    color: #FF7200;
+    color: #ffffff;
     border-radius: 5px;
     margin-top: 0.5em;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -136,23 +189,23 @@ body {
 
 #filters select:hover,
 #filters select:focus {
-    border-color: #d87905;
-    color: #FF7200;
+    border-color: #ffffff;
+    color: #ffffff;
     background-color: #000;
 }
 
 #filters select option {
     background-color: #000;
-    color: #FF7200;
+    color: #ffffff;
 }
 
 #filters select:focus option {
     background-color: #000;
-    color: #FF7200;
+    color: #ffffff;
 }
 
 #filters select option:checked {
-    background-color: #FF7200;
+    background-color: #89bef0;
     color: #000;
 }
 
@@ -167,7 +220,7 @@ body {
 
 .active {
     background-color: #020202;
-    color: #ef9700;
+    color: #ffffff;
 }
 
 #products {
@@ -176,7 +229,7 @@ body {
     grid-gap: 1.5em;
     padding: 2em 0;
     max-width: 1200px;
-    margin: 0 auto;
+    margin-left: 37%;
     justify-content: center;
 }
 
@@ -185,57 +238,98 @@ body {
     max-width: 18em;
     margin-top: 1em;
     padding: 1em;
-    border-radius: 5px;
+    border-radius: 20px;
     box-shadow: 1em 2em 2.5em rgba(1, 2, 68, 0.08);
-    position: relative; /* Added for positioning brand logo */
-    transition: transform 0.3s ease; /* For card animation */
-    overflow: hidden; /* Ensure hidden text doesn't affect layout */
+    position: relative;
+    /* Added for positioning brand logo */
+    transition: transform 0.3s ease;
+    /* For card animation */
+    overflow: hidden;
+    /* Ensure hidden text doesn't affect layout */
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Hover effect */
+    transform: translateY(-5px);
+    /* Hover effect */
 }
 
 .image-container {
     text-align: center;
-    position: relative; /* Required for absolute positioning of hidden text */
+    position: relative;
+    /* Required for absolute positioning of hidden text */
 }
 
 .image-container .hidden-text {
-    position: absolute; /* Position the hidden text over the image */
+    position: absolute;
+    /* Position the hidden text over the image */
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.7);
+    /* Semi-transparent background */
     color: #ffffff;
-    display: flex; /* Centering text */
+    display: flex;
+    /* Centering text */
     align-items: center;
     justify-content: center;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease; /* Transition for reveal effect */
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity 0.3s ease;
+    /* Transition for reveal effect */
 }
 
 .image-container:hover .hidden-text {
-    opacity: 1; /* Reveal on hover */
+    opacity: 1;
+    /* Reveal on hover */
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    height: 30vh;
+    /* Full viewport height */
+}
+
+.logo img {
+    width: auto;
+    /* Ensure it maintains aspect ratio */
+    max-width: 1500px;
+    /* Set a maximum width */
+    height: 30em;
+    /* Ensure it maintains aspect ratio */
 }
 
 img {
     max-width: 100%;
+    margin-left: 5%;
     object-fit: contain;
     height: 15em;
+
+}
+
+@media screen and (max-width: 850px) {
+    img {
+        height: 10em;
+    }
 }
 
 .container {
     padding-top: 1em;
-    color: #ffffff; /* Changed to white */
+    color: #ffffff;
+    /* Changed to white */
 }
 
 .brand-logo {
-    position: absolute; /* Positioned to the bottom right of the card */
+    position: absolute;
+    /* Positioned to the bottom right of the card */
     bottom: 10px;
     right: 10px;
-    width: 50px; /* Set a fixed width for the logo */
+    width: 50px;
+    /* Set a fixed width for the logo */
 }
 
 .brand-logo img {
@@ -250,12 +344,14 @@ img {
 /* Responsive Design */
 @media screen and (max-width: 850px) {
     #products {
-        grid-template-columns: repeat(3, 1fr); /* Mengatur 3 kolom */
-        grid-column-gap: 1em; /* Jarak antar kolom */
+        grid-template-columns: repeat(3, 1fr);
+        /* Mengatur 3 kolom */
+        grid-column-gap: 1em;
+        /* Jarak antar kolom */
     }
 
     img {
-        max-width: 100%;
+        max-width: 10%;
         object-fit: contain;
         height: 10em;
     }
@@ -285,12 +381,14 @@ img {
 }
 
 #menu-bar {
-    display: none; /* Sembunyikan secara default */
+    display: none;
+    /* Sembunyikan secara default */
 }
 
 @media screen and (max-width: 555px) {
     #menu-bar {
-        display: block; /* Tampilkan saat lebar layar 555px atau kurang */
+        display: block;
+        /* Tampilkan saat lebar layar 555px atau kurang */
         cursor: pointer;
         color: #ffffff;
     }
@@ -315,7 +413,7 @@ img {
         padding: 10px 20px;
         position: relative;
     }
-    
+
     #navbar li a {
         text-decoration: none;
         font-size: 16px;
@@ -324,4 +422,25 @@ img {
         transition: 0.3s ease;
         display: block;
     }
+
+    .suggestions {
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 600px;
+        display: none;
+    }
+
+    .suggestions div {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestions div:hover {
+        background: #f0f0f0;
+    }
+
+
+
 }
