@@ -1,5 +1,5 @@
 angular.module('reviewApp', [])
-.controller('ReviewController', function($scope, $window, $http) {
+.controller('ReviewController', function($scope, $window, $http, $timeout) {
     // Navigation functions
     $scope.goToProfile = function() {
         // Cek session terlebih dahulu
@@ -29,8 +29,84 @@ angular.module('reviewApp', [])
         $window.location.href = '/review.html';
     };
 
-    // Initialize review data
+    // Pagination variables
+    $scope.currentPage = 0;
+    $scope.pageSize = 4;
     $scope.reviews = [];
+    
+    // Get reviews from server
+    $scope.loadReviews = function() {
+        $http.get('/api/reviews')
+            .then(function(response) {
+                $scope.reviews = response.data;
+                $scope.totalItems = $scope.reviews.length;
+                $scope.pageCount = Math.ceil($scope.totalItems / $scope.pageSize);
+                
+                // Set timeout untuk update otomatis
+                $timeout(function() {
+                    $scope.loadReviews();
+                }, 2000); // Update setiap 2 detik
+            })
+            .catch(function(error) {
+                console.error('Error loading reviews:', error);
+            });
+    };
+
+    // Get current page reviews
+    $scope.getCurrentReviews = function() {
+        var begin = $scope.currentPage * $scope.pageSize;
+        var end = begin + $scope.pageSize;
+        return $scope.reviews.slice(begin, end);
+    };
+
+    // Change page with smooth transition
+    $scope.changePage = function(newPage) {
+        if (newPage >= 0 && newPage < $scope.pageCount) {
+            // Tambahkan class untuk animasi fade out
+            angular.element(document.querySelector('.row')).addClass('fade-out');
+            
+            $timeout(function() {
+                $scope.currentPage = newPage;
+                // Tambahkan class untuk animasi fade in
+                angular.element(document.querySelector('.row')).removeClass('fade-out').addClass('fade-in');
+                
+                $timeout(function() {
+                    angular.element(document.querySelector('.row')).removeClass('fade-in');
+                }, 300);
+            }, 300);
+        }
+    };
+
+    // Previous page with animation
+    $scope.prevPage = function() {
+        if ($scope.currentPage > 0) {
+            $scope.changePage($scope.currentPage - 1);
+        }
+    };
+
+    // Next page with animation
+    $scope.nextPage = function() {
+        if ($scope.currentPage < $scope.pageCount - 1) {
+            $scope.changePage($scope.currentPage + 1);
+        }
+    };
+
+    // Get array for pagination numbers
+    $scope.getPages = function() {
+        return new Array($scope.pageCount);
+    };
+
+    // Load initial data
+    $scope.loadReviews();
+
+    // Cleanup when controller is destroyed
+    $scope.$on('$destroy', function() {
+        if ($timeout.cancel) {
+            $timeout.cancel($scope.loadReviews);
+        }
+    });
+
+    // Initialize review data
     $scope.newReview = {
         productName: '',
         brand: '',
@@ -40,17 +116,6 @@ angular.module('reviewApp', [])
         dislikes: 0
     };
     $scope.isEditing = false;
-
-    // Load reviews
-    $scope.loadReviews = function() {
-        $http.get('/api/reviews')
-            .then(function(response) {
-                $scope.reviews = response.data;
-            })
-            .catch(function(error) {
-                console.error('Error loading reviews:', error);
-            });
-    };
 
     // Create/Edit review modal
     $scope.openReviewModal = function(review) {
@@ -149,7 +214,4 @@ angular.module('reviewApp', [])
                 console.error('Error disliking review:', error);
             });
     };
-
-    // Load initial data
-    $scope.loadReviews();
 });

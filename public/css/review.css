@@ -198,3 +198,130 @@ body {
 .card-subtitle {
     font-size: 0.9rem;
 }
+
+/* Update container spacing */
+.container.mt-4.mb-5 {
+    margin-top: 100px !important; /* Menambah jarak dari atas */
+    padding-bottom: 100px; /* Menambah jarak dari bawah sebelum footer */
+}
+
+/* Update card styling */
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    margin-bottom: 30px; /* Menambah jarak antar card */
+}
+
+/* Pastikan navbar tidak menutupi konten */
+.nav-menu {
+    background: #070707;
+    padding: 1.5rem;
+    display: flex;  
+    justify-content: flex-end;
+    gap: 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Memastikan floating button tidak tertutup footer */
+.floating-btn {
+    bottom: 100px !important; /* Menaikkan posisi button */
+}
+
+/* Update footer positioning */
+.footer {
+    margin-top: auto;
+    padding: 20px 0;
+    position: relative;
+    z-index: 999;
+}
+
+/* Pagination styling */
+.pagination {
+    margin-bottom: 50px;
+}
+
+.pagination .page-link {
+    color: #495057;
+    border: 1px solid #dee2e6;
+    margin: 0 3px;
+    border-radius: 4px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    color: #0056b3;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #89bef0;
+    border-color: #89bef0;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Update container untuk pagination */
+.container.mt-4.mb-5 {
+    margin-top: 100px !important;
+    padding-bottom: 50px;
+}
+
+/* Tambahkan animasi untuk transisi halaman */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Update card styling untuk animasi */
+.card {
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+/* Animasi loading */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top-color: #007bff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Update pagination styling */
+.pagination .page-link {
+    transition: all 0.2s ease;
+}
+
+.pagination .page-item.active .page-link {
+    transform: scale(1.1);
+}
+
+/* Hover effect untuk card */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
