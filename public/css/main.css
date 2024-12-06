@@ -217,4 +217,223 @@ body {
     color: #89bef0;
 }
 
+/* Update styling untuk Trusted Reviews section */
+.trusted-reviews {
+    padding: 60px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                url('../img/reviews-bg.jpg') center center;
+    background-size: cover;
+    position: relative;
+}
+
+.trusted-reviews .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.trusted-reviews .section-title h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.trusted-reviews .section-title p {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.review-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.review-item:hover {
+    transform: translateY(-10px);
+}
+
+.review-item .rating {
+    margin-bottom: 20px;
+}
+
+.review-item .rating i {
+    color: #ffc107;
+    margin: 0 2px;
+    font-size: 18px;
+}
+
+.review-item p {
+    font-style: italic;
+    margin: 0 auto 15px auto;
+    color: #fff;
+}
+
+.review-info h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.review-info h4 {
+    font-size: 14px;
+    color: #ddd;
+    margin: 0;
+}
+
+/* Swiper styling */
+.reviews-slider {
+    padding-bottom: 40px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #fff;
+}
+
+/* Animasi untuk review items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.review-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Video Reviews Section Styling */
+.video-reviews {
+    padding: 80px 0;
+    background: #1a1a1a;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.section-title p {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+.video-box {
+    background: #2a2a2a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.video-box:hover {
+    transform: translateY(-10px);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+/* YouTube iframe styling */
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px 15px 0 0;
+}
+
+.video-info {
+    padding: 20px;
+}
+
+.video-info h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.rating {
+    color: #ffc107;
+    font-size: 16px;
+}
+
+.rating i {
+    margin-right: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-box {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* Loading Placeholder */
+.video-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2a2a2a;
+    z-index: -1;
+}
+
+/* Hover effect enhancement */
+.video-box:hover .video-info h3 {
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+/* Animation for loading */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.6; }
+}
+
+.video-container.loading::before {
+    animation: pulse 1.5s infinite;
+}
+
 
