@@ -9,7 +9,7 @@ body {
 
 .auth-icon {
     font-size: 3rem;
-    color: #007bff;
+    color: #89bef0;
 }
 
 .input-group-text {
@@ -58,13 +58,13 @@ body {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #9ea5ac;
+    border-color: #8e949a;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: #89bef0;
+    border-color: #89bef0;
 }
 
 @media (max-width: 576px) {
