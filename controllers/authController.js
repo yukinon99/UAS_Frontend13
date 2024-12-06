@@ -33,31 +33,22 @@ const authController = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
+            const { username, password } = req.body;
+            const user = await User.findOne({ username });
             
-            // Check user
-            const user = await User.findOne({ email });
-            if (!user) {
-                return res.render('login', { error: 'Invalid credentials' });
+            if (user && await user.comparePassword(password)) {
+                // Simpan user ke session
+                req.session.user = {
+                    id: user._id,
+                    username: user.username,
+                    // ... data user lainnya yang diperlukan
+                };
+                res.json({ success: true });
+            } else {
+                res.status(401).json({ error: 'Invalid credentials' });
             }
-
-            // Check password
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return res.render('login', { error: 'Invalid credentials' });
-            }
-
-            // Set session
-            req.session.user = {
-                _id: user._id,
-                username: user.username,
-                email: user.email
-            };
-            
-            res.redirect('/');
-        } catch (err) {
-            console.error(err);
-            res.render('login', { error: 'Login failed' });
+        } catch (error) {
+            res.status(500).json({ error: 'Login failed' });
         }
     },
 

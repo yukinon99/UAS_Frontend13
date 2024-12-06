@@ -1,60 +1,236 @@
 <!DOCTYPE html>
-<html ng-app="productApp">
+<html ng-app="searchApp">
 <head>
-    <title>Search Products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - GelSond</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/search.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/search.css">
 </head>
-<body ng-controller="SearchController">
+<body ng-controller="SearchController" class="bg-custom-light">
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="left-section">
-            <img src="img/Real-Sound.png" alt="Real Sound" class="logo">
-        </div>
-        <div class="center-section">
-            <a href="/" class="home-icon">
-                <i class="fas fa-home"></i>
-            </a>
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="cart-icon">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-        </div>
-        <div class="right-section">
-            <div class="profile-icon" style="cursor: pointer;">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Search Content -->
-    <div class="search-container">
-        <h1>Search Products</h1>
-        <div class="search-filters">
-            <input type="text" ng-model="searchQuery" placeholder="Search by name" />
-            <select ng-model="selectedBrand">
-                <option value="">All Brands</option>
-                <option value="Brand A">Brand A</option>
-                <option value="Brand B">Brand B</option>
-            </select>
-            <select ng-model="selectedType">
-                <option value="">All Types</option>
-                <option value="Type 1">Type 1</option>
-                <option value="Type 2">Type 2</option>
-            </select>
-            <input type="number" ng-model="maxPrice" placeholder="Max Price" />
-        </div>
-
-        <ul class="product-list">
-            <li class="product-item" ng-repeat="product in products | filter:filterProducts">
-                {{ product.name }} - {{ product.brand }} - ${{ product.price }} - {{ product.type }}
-            </li>
-        </ul>
+    <div class="nav-menu">
+        <a href="#" ng-click="goToMain()" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#" class="active" title="Search">
+            <i class="fas fa-search"></i>
+        </a>
+        <a href="#" ng-click="goToReview()" title="Review Headset">
+            <i class="fas fa-blog"></i>
+        </a>
+        <a href="#" ng-click="goToProfile()" title="Profile">
+            <i class="fas fa-user"></i>
+        </a>
     </div>
 
-    <script src="js/navigation.js"></script>
+    <!-- Search and Filter Section -->
+    <div class="container mt-4 mb-5">
+        <!-- Search Bar -->
+        <div class="search-container mb-4">
+            <div class="input-group">
+                <input type="text" 
+                       class="form-control" 
+                       placeholder="Search headsets..." 
+                       ng-model="searchQuery"
+                       ng-change="search()">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Budget Filter -->
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Budget Range</strong></label>
+                        <select class="form-select" ng-model="filters.budget">
+                            <option value="">All Prices</option>
+                            <option value="0-50">Under $50</option>
+                            <option value="50-100">$50 - $100</option>
+                            <option value="100-200">$100 - $200</option>
+                            <option value="200-500">$200 - $500</option>
+                            <option value="500+">Above $500</option>
+                        </select>
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Brand</strong></label>
+                        <div class="brand-checkboxes">
+                            <div class="form-check" ng-repeat="brand in brands">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       ng-model="filters.brands[brand]"
+                                       id="brand{{$index}}">
+                                <label class="form-check-label" for="brand{{$index}}">
+                                    {{brand}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Type</strong></label>
+                        <div class="type-checkboxes">
+                            <div class="form-check" ng-repeat="type in types">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       ng-model="filters.types[type]"
+                                       id="type{{$index}}">
+                                <label class="form-check-label" for="type{{$index}}">
+                                    {{type}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reset Filters Button -->
+                    <button class="btn btn-secondary w-100" ng-click="resetFilters()">
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" ng-repeat="product in filteredProducts">
+                    <div class="card h-100 product-card">
+                        <!-- Edit & Delete buttons -->
+                        <div class="product-actions">
+                            <button class="edit-btn" ng-click="editProduct(product)" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="delete-btn" ng-click="deleteProduct(product)" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <img ng-src="{{product.image}}" class="card-img-top" alt="{{product.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text text-muted">{{product.brand}}</p>
+                            <p class="card-text">{{product.type}}</p>
+                            <p class="card-text"><strong>${{product.price | number:2}}</strong></p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <button class="btn btn-primary w-100" ng-click="product.showDetails = true">
+                                View Details
+                            </button>
+                        </div>
+
+                        <!-- Overlay Details -->
+                        <div class="details-overlay" ng-show="product.showDetails">
+                            <div class="details-content">
+                                <button class="close-details" ng-click="product.showDetails = false">×</button>
+                                <h4>{{product.name}}</h4>
+                                <div class="details-info">
+                                    <p><strong>Brand:</strong> {{product.brand}}</p>
+                                    <p><strong>Type:</strong> {{product.type}}</p>
+                                    <p><strong>Price:</strong> ${{product.price | number:2}}</p>
+                                    <p><strong>Description:</strong></p>
+                                    <p>{{product.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="text-center py-5" ng-if="filteredProducts.length === 0">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No products found</h4>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/search.js"></script>
+
+    <!-- Floating Action Button -->
+    <div class="fab" ng-click="openAddProductModal()">
+        <i class="fas fa-plus"></i>
+    </div>
+
+    <!-- Modal Add Product -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="addProduct()">
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" ng-model="newProduct.name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" ng-model="newProduct.brand" required>
+                                <option value="">Select Brand</option>
+                                <option ng-repeat="brand in brands" value="{{brand}}">{{brand}}</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" ng-model="newProduct.type" required>
+                                <option value="">Select Type</option>
+                                <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price ($)</label>
+                            <input type="number" 
+                                   class="form-control" 
+                                   ng-model="newProduct.price" 
+                                   required 
+                                   min="0" 
+                                   step="0.01">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Product Image</label>
+                            <div class="d-flex gap-2">
+                                <input type="file" 
+                                       class="form-control" 
+                                       accept="image/*" 
+                                       id="productImage"
+                                       onchange="angular.element(this).scope().previewImage(this)">
+                            </div>
+                            <div class="mt-2" ng-if="newProduct.image">
+                                <img ng-src="{{newProduct.image}}" 
+                                     class="img-preview" 
+                                     alt="Preview">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" ng-model="newProduct.description" rows="3"></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

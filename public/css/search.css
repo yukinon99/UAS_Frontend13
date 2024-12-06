@@ -1,30 +1,32 @@
-/* Navbar styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #000;
-    color: white;
+/* Navbar styling */
+.nav-menu {
+    background: #070707;
+    padding: 1.5rem;
+    display: flex;  
+    justify-content: flex-end;
+    gap: 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
-.left-section .logo {
-    height: 40px;
+.nav-menu a {
+    color: rgb(94, 90, 90);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 1.2rem;
 }
 
-.center-section {
-    display: flex;
-    gap: 2rem;
+.nav-menu a:hover {
+    color: #89bef0;
+    background: transparent;
 }
 
-.center-section i {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-}
-
-.center-section i:hover {
-    color: #ff6b00;
+.nav-menu a.active {
+    color: #89bef0;
 }
 
 /* Search page styles */
@@ -32,6 +34,8 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 70px;
+    margin-bottom: 20px;
 }
 
 .search-filters {
@@ -76,4 +80,243 @@
 .profile-icon:hover {
     color: #ff6b00;
     transition: color 0.3s ease;
+}
+
+.bg-custom-light {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-bottom: 70px;
+}
+
+.filter-section .card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.brand-checkboxes, .type-checkboxes {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.product-card {
+    transition: transform 0.2s;
+    border: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.results-section {
+    margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-section {
+        margin-bottom: 20px;
+    }
+}
+
+.fab {
+    position: fixed;
+    bottom: 80px; /* Posisikan di atas navbar */
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #89bef0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.fab:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.fab i {
+    font-size: 24px;
+}
+
+/* Tambahkan style untuk preview gambar */
+.img-preview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Container tidak perlu padding-top lagi karena sudah dihandle oleh search-container */
+.container {
+    padding-top: 0;
+}
+
+/* Product card action buttons */
+.product-card {
+    position: relative;
+}
+
+.product-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none; /* Hidden by default */
+    gap: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.product-card:hover .product-actions {
+    display: flex; /* Show on hover */
+}
+
+.product-actions button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.product-actions .delete-btn:hover {
+    color: #dc3545; /* Red color on hover */
+}
+
+.product-actions .edit-btn:hover {
+    color: #ffc107; /* Yellow color on hover */
+}
+
+/* Product details hover box */
+.product-card {
+    position: relative;
+}
+
+.product-details-hover {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+    z-index: 100;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.product-details-hover.show {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+.product-details-hover .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.product-details-hover .details-content {
+    margin-top: 40px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Product card dan details overlay */
+.product-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.details-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.details-content {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.close-details {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.details-info {
+    margin-top: 40px;
+}
+
+.details-info p {
+    margin-bottom: 10px;
+}
+
+/* Animasi sederhana */
+.details-overlay {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Search box styling */
+.search-container .input-group .btn-primary {
+    background-color: #89bef0;
+    border-color: #89bef0;
+}
+
+.search-container .input-group .btn-primary:hover {
+    background-color: #7ab0e8;
+    border-color: #7ab0e8;
+}
+
+/* Filter section styling */
+.filter-section .card-header {
+    background-color: #89bef0 !important; /* !important untuk override Bootstrap */
+    border-color: #89bef0;
 }

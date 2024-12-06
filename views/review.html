@@ -11,15 +11,15 @@
     <link rel="stylesheet" href="/css/review.css">
 </head>
 <body ng-controller="ReviewController" class="bg-custom-light">
-    <!-- Navbar yang sama dengan main.html -->
+    <!-- Navbar -->
     <div class="nav-menu">
-        <a href="#!" title="Home">
+        <a href="#" ng-click="goToMain()" title="Home">
             <i class="fas fa-home"></i>
         </a>
-        <a href="#!search" title="Search">
+        <a href="#" ng-click="goToSearch()" title="Search">
             <i class="fas fa-search"></i>
         </a>
-        <a href="#!review" class="active" title="Review Headset">
+        <a href="#" class="active" title="Review Headset">
             <i class="fas fa-blog"></i>
         </a>
         <a href="#" ng-click="goToProfile()" title="Profile">
@@ -27,39 +27,128 @@
         </a>
     </div>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Review Headset</h1>
-        <div class="card mb-3" ng-repeat="review in reviews">
-            <div class="card-body">
-                <h5 class="card-title">{{review.brand}}</h5>
-                <p class="card-text">{{review.comment}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <button class="btn btn-success" ng-click="likeReview(review)">
-                            <i class="fas fa-thumbs-up"></i> {{review.likes}}
-                        </button>
-                        <button class="btn btn-danger" ng-click="dislikeReview(review)">
-                            <i class="fas fa-thumbs-down"></i> {{review.dislikes}}
-                        </button>
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{isEditing ? 'Edit Review' : 'Add Review'}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" ng-model="newReview.productName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Brand</label>
+                            <select class="form-select" ng-model="newReview.brand" required>
+                                <option value="">Select Brand</option>
+                                <option value="Sony">Sony</option>
+                                <option value="Bose">Bose</option>
+                                <option value="HyperX">HyperX</option>
+                                <option value="Razer">Razer</option>
+                                <option value="Logitech">Logitech</option>
+                                <option value="SteelSeries">SteelSeries</option>
+                                <option value="JBL">JBL</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <select class="form-select" ng-model="newReview.rating">
+                                <option value="1">1 Star</option>
+                                <option value="2">2 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="5">5 Stars</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea class="form-control" ng-model="newReview.comment" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveReview()">Save Review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Cards dengan Rating Stars di dalam container -->
+    <div class="container mt-4 mb-5">
+        <div class="row">
+            <div class="col-md-6 mb-4" ng-repeat="review in reviews">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title">{{review.productName}}</h5>
+                                <h6 class="card-subtitle text-muted">{{review.brand}}</h6>
+                            </div>
+                            <div class="rating-container p-2 rounded">
+                                <div class="rating-number mb-1">{{review.rating}}/5</div>
+                                <div class="rating">
+                                    <i class="fas fa-star" 
+                                       ng-class="{'text-warning': $index < review.rating}" 
+                                       ng-repeat="_ in [1,2,3,4,5] track by $index"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text">{{review.comment}}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary btn-sm" ng-click="likeReview(review)">
+                                    <i class="fas fa-thumbs-up"></i> {{review.likes}}
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" ng-click="dislikeReview(review)">
+                                    <i class="fas fa-thumbs-down"></i> {{review.dislikes}}
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-secondary btn-sm" ng-click="openReviewModal(review)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" ng-click="deleteReview(review)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <span class="badge bg-primary">{{review.rating}}/5</span>
+                    <div class="card-footer text-muted">
+                        {{review.createdAt | date:'medium'}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer yang sama dengan main.html -->
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <p><strong>Follow Us</strong></p>
-            <div class="footer-social-icons">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-twitter"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
+    <!-- Floating Action Button -->
+    <button class="btn btn-primary rounded-circle position-fixed floating-btn" 
+            style="bottom: 30px; right: 30px; width: 60px; height: 60px; z-index: 1000;"
+            ng-click="openReviewModal()">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Footer yang selalu di bawah -->
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <h5>Follow Us</h5>
+                    <div class="footer-social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">© 2024 GelSond. All rights reserved.</p>
+                </div>
             </div>
-            <p>&copy; 2024 GelSond. All rights reserved.</p>
         </div>
     </footer>
 
